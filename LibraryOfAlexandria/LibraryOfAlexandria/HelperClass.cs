@@ -12,8 +12,9 @@ namespace LibraryOfAlexandria
         public static Library InitLibrary()
         {
             Library library = new Library();
-            //string bookFilePath = @"..\Inventory.txt";
-            string bookFilePath = @"C:\Users\Colin\source\repos\GCMidtermProject\LibraryOfAlexandria\LibraryOfAlexandria\Inventory.txt";
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+            string bookFilePath = projectDirectory + @"\Inventory.txt";
 
             StreamReader reader = new StreamReader(bookFilePath);
             while (true)
