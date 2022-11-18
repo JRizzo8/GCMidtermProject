@@ -7,8 +7,14 @@
         public ShelfStatus ShelfStatus { get; set; }
         public DateTime DueDate { get; set; }
 
+
         //public Book()
         //{
+
+
+        public Book()
+        {
+
 
         //}
 
@@ -18,7 +24,5 @@
             Author = author;
             ShelfStatus = status;
         }
-
-
     }
 }
