@@ -36,10 +36,6 @@
         {
 
         }
-
-
-
-
         public List<Book> TitleSearch(List<Book> bookList)
         {
             List<Book> titleSearchResultsList = new List<Book>();
@@ -62,11 +58,6 @@
             }
             return authorSearchResultsList;
         }
-
-
-
-
-
         public List<Book> DisplayAllBooks()
         {
             return Books;
