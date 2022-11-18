@@ -7,14 +7,41 @@
 
         public Library() { }
 
-        public void CheckOutBooks() 
+        public void CheckOutBook(string title, List<Book> listToCheckBookOutOf) 
         {
+            Books = listToCheckBookOutOf;
+            foreach(Book book in Books) 
+            {   
 
+                if (book.ShelfStatus.Equals(ShelfStatus.OnShelf) && book.Title == title)
+                {
+                    book.ShelfStatus = ShelfStatus.OffShelf;
+                    var currentDate = DateTime.Now;
+                    book.DueDate = currentDate.AddDays(14);
+                }
+            }
+            //me
         }
 
-        public void AddABook()
+        public void AddABook(string title, string author, List<Book> listToAddBookTo )
         {
+            Books = listToAddBookTo;
+            Books.Add(new Book(title, author, ShelfStatus.OnShelf));
 
+            //me
+        }
+        public void ReturnBooks(string title, List<Book> listToReturnBookTo)
+        {
+            Books = listToReturnBookTo;
+            foreach(var item in Books) 
+            {
+                if (item.Title == title && item.ShelfStatus == ShelfStatus.OffShelf) 
+                {
+                    item.ShelfStatus=ShelfStatus.OnShelf;
+                }
+                
+            }
+            //me
         }
 
         public void DisplayCheckedOutList()
@@ -59,14 +86,19 @@
             return authorSearchResultsList;
         }
         public List<Book> DisplayAllBooks()
+
+        public void SearchByAuthor(string authorName)
         {
-            return Books;
+        }
+        public void SearchByTitle(string bookTitle)
+        {
         }
 
-        public void ReturnBooks()
+        public void DisplayAllBooks()
         {
-
         }
+
+
 
     }
 }
