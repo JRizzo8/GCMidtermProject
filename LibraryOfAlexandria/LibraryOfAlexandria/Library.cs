@@ -9,14 +9,41 @@ namespace LibraryOfAlexandria
 
         public Library() { }
 
-        public void CheckOutBooks() 
+        public void CheckOutBook(string title, List<Book> listToCheckBookOutOf) 
         {
+            Books = listToCheckBookOutOf;
+            foreach(Book book in Books) 
+            {   
 
+                if (book.ShelfStatus.Equals(ShelfStatus.OnShelf) && book.Title == title)
+                {
+                    book.ShelfStatus = ShelfStatus.OffShelf;
+                    var currentDate = DateTime.Now;
+                    book.DueDate = currentDate.AddDays(14);
+                }
+            }
+            //rizzo
         }
 
-        public void AddABook()
+        public void AddABook(string title, string author, List<Book> listToAddBookTo )
         {
+            Books = listToAddBookTo;
+            Books.Add(new Book(title, author, ShelfStatus.OnShelf));
 
+            //rizzo
+        }
+        public void ReturnBooks(string title, List<Book> listToReturnBookTo)
+        {
+            Books = listToReturnBookTo;
+            foreach(var item in Books) 
+            {
+                if (item.Title == title && item.ShelfStatus == ShelfStatus.OffShelf) 
+                {
+                    item.ShelfStatus=ShelfStatus.OnShelf;
+                }
+                
+            }
+            //rizzo
         }
 
         public void DisplayCheckedOutList()
@@ -46,35 +73,30 @@ namespace LibraryOfAlexandria
         {
 
         }
-
-
-
-
-        public List<Book> SearchByAuthor(string authorName)
+        public List<Book> TitleSearch(List<Book> bookList)
         {
-            List<Book> authorList = new List<Book>();
-            foreach (var item in Books)
+            List<Book> titleSearchResultsList = new List<Book>();
+            string titleSearchString = Console.ReadLine().ToLower();
+
+            foreach (var result in bookList.Where(x => x.Title.ToLower().IndexOf(titleSearchString) == 0))
             {
-                if (item.Author == authorName)
-                {
-                    authorList.Add(item);
-                }
+                titleSearchResultsList.Add(result);
             }
-            return authorList;
+            return titleSearchResultsList;
         }
-        public List<Book> SearchByTitle(string bookTitle)
+        public List<Book> AuthorSearch(List<Book> bookList)
         {
-            List<Book> bookTitleList = new List<Book>();
-            foreach (var item in Books)
+            List<Book> authorSearchResultsList = new List<Book>();
+            string authorSearchString = Console.ReadLine().ToLower();
+
+            foreach (var result in bookList.Where(x => x.Author.ToLower().IndexOf(authorSearchString) == 0))
             {
-                if (item.Title == bookTitle)
-                {
-                    bookTitleList.Add(item);
-                }
+                authorSearchResultsList.Add(result);
             }
-            return bookTitleList;
+            return authorSearchResultsList;
         }
 
+        // Amelia
         public List<Book> DisplayAllBooks(string allBooks) //fyi i do not think i did this right at all, it feels redundant as fuck but i seriously just dont understand
         {
             List<Book> allBookList = new List<Book>();
@@ -83,12 +105,19 @@ namespace LibraryOfAlexandria
                 allBookList.Add(item);
             }
             return allBookList;
-        }
 
-        public void ReturnBooks()
+        public List<Book> DisplayAllBooks()
+
+        public void SearchByAuthor(string authorName)
         {
 
         }
+        public void SearchByTitle(string bookTitle)
+        {
+        }
+
+
 
     }
 }
+

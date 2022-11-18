@@ -19,7 +19,5 @@
             Author = author;
             ShelfStatus = status;
         }
-
-
     }
 }
