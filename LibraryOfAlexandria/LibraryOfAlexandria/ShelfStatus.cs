@@ -9,6 +9,7 @@ namespace LibraryOfAlexandria
     public enum ShelfStatus
     {
         OnShelf,
-        OffShelf
+        OffShelf,
+        Removed
     }
 }
