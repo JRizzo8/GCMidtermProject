@@ -20,7 +20,7 @@
                     book.DueDate = currentDate.AddDays(14);
                 }
             }
-            //me
+            //rizzo
         }
 
         public void AddABook(string title, string author, List<Book> listToAddBookTo )
@@ -28,7 +28,7 @@
             Books = listToAddBookTo;
             Books.Add(new Book(title, author, ShelfStatus.OnShelf));
 
-            //me
+            //rizzo
         }
         public void ReturnBooks(string title, List<Book> listToReturnBookTo)
         {
@@ -41,7 +41,7 @@
                 }
                 
             }
-            //me
+            //rizzo
         }
 
         public void DisplayCheckedOutList()
