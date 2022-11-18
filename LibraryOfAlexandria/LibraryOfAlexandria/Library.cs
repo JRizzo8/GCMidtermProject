@@ -40,30 +40,32 @@
 
 
 
-        public List<Book> SearchByAuthor(string authorName)
+        public List<Book> TitleSearch(List<Book> bookList)
         {
-            List<Book> authorList = new List<Book>();
-            foreach (var item in Books)
+            List<Book> titleSearchResultsList = new List<Book>();
+            string titleSearchString = Console.ReadLine().ToLower();
+
+            foreach (var result in bookList.Where(x => x.Title.ToLower().IndexOf(titleSearchString) == 0))
             {
-                if (item.Author == authorName)
-                {
-                    authorList.Add(item);
-                }
+                titleSearchResultsList.Add(result);
             }
-            return authorList;
+            return titleSearchResultsList;
         }
-        public List<Book> SearchByTitle(string bookTitle)
+        public List<Book> AuthorSearch(List<Book> bookList)
         {
-            List<Book> bookTitleList = new List<Book>();
-            foreach (var item in Books)
+            List<Book> authorSearchResultsList = new List<Book>();
+            string authorSearchString = Console.ReadLine().ToLower();
+
+            foreach (var result in bookList.Where(x => x.Author.ToLower().IndexOf(authorSearchString) == 0))
             {
-                if (item.Title == bookTitle)
-                {
-                    bookTitleList.Add(item);
-                }
+                authorSearchResultsList.Add(result);
             }
-            return bookTitleList;
+            return authorSearchResultsList;
         }
+
+
+
+
 
         public List<Book> DisplayAllBooks()
         {
