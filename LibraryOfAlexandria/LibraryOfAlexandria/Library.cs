@@ -1,4 +1,6 @@
-﻿namespace LibraryOfAlexandria
+﻿using System.Runtime.CompilerServices;
+
+namespace LibraryOfAlexandria
 {
     public class Library
     {
@@ -27,9 +29,17 @@
 
         }
 
-        public void DisplayAvailableBooks()
+        public List<Book> DisplayAvailableBooks(string available)
         {
-
+            List<Book> availibleList = new List<Book>();
+            foreach (var item in Books)
+            {
+                if (item.ShelfStatus == 0)
+                {
+                    availibleList.Add(item);
+                }
+            }
+            return availibleList;
         }
 
         public void ListPastDueBooks()
@@ -65,9 +75,14 @@
             return bookTitleList;
         }
 
-        public List<Book> DisplayAllBooks()
+        public List<Book> DisplayAllBooks(string allBooks) //fyi i do not think i did this right at all, it feels redundant as fuck but i seriously just dont understand
         {
-            return Books;
+            List<Book> allBookList = new List<Book>();
+            foreach (var item in Books)
+            {
+                allBookList.Add(item);
+            }
+            return allBookList;
         }
 
         public void ReturnBooks()
