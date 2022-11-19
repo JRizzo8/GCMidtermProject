@@ -4,65 +4,77 @@ using static System.Reflection.Metadata.BlobBuilder;
 
 using System.IO;
 
-Library library = HelperClass.InitLibrary();
+//Library library = HelperClass.InitLibrary();
 
-List<Book> books = library.Books;
-
-
-foreach(Book book in books)
-{
-    Console.WriteLine($"{book.Title} {book.Author} {book.ShelfStatus}");
-}
-
-using System.Xml;
-
-Library test = new Library(); 
-
-List<Book> testList = new List<Book>();
-testList.Add(new Book("title1", "author1", ShelfStatus.OnShelf));
-testList.Add(new Book("title2", "author2", ShelfStatus.OnShelf));
-testList.Add(new Book("title3", "author3", ShelfStatus.OnShelf));
-testList.Add(new Book("title4", "author4", ShelfStatus.OnShelf));
+//List<Book> books = library.Books;
 
 
-// initial list test
-foreach (var item in testList)
-{
-    Console.WriteLine($"{item.Title} by {item.Author} is currently {item.ShelfStatus}");
-}
+//foreach(Book book in books)
+//{
+//    Console.WriteLine($"{book.Title} {book.Author} {book.ShelfStatus}");
+//}
 
-// testing the CheckOutBook method
-Console.WriteLine("Please enter the title of the book you would like to check out");
+//using System.Xml;
 
-test.CheckOutBook(Console.ReadLine().ToLower(), testList);
-foreach (var item in testList)
-{
-    Console.WriteLine($"{item.Title} by {item.Author} is currently {item.ShelfStatus}, its due date is {item.DueDate}");
-}
+//Library test = new Library(); 
 
-//testing the AddABook method
-Console.WriteLine("Please enter the title of the book to add");
-string userTitle = Console.ReadLine().ToLower();
+//List<Book> testList = new List<Book>();
+//testList.Add(new Book("title1", "author1", ShelfStatus.OnShelf));
+//testList.Add(new Book("title2", "author2", ShelfStatus.OnShelf));
+//testList.Add(new Book("title3", "author3", ShelfStatus.OnShelf));
+//testList.Add(new Book("title4", "author4", ShelfStatus.OnShelf));
 
-Console.WriteLine("Now please enter the author");
-string userAuthor = Console.ReadLine().ToLower();
 
-test.AddABook(userTitle, userAuthor, testList);
+//// initial list test
+//foreach (var item in testList)
+//{
+//    Console.WriteLine($"{item.Title} by {item.Author} is currently {item.ShelfStatus}");
+//}
 
-foreach (var item in testList)
-{
-    Console.WriteLine($"{item.Title} by {item.Author} is currently {item.ShelfStatus}");
-}
+//// testing the CheckOutBook method
+//Console.WriteLine("Please enter the title of the book you would like to check out");
 
-// testing ReturnBook method
-Console.WriteLine("Please enter the title of the book to return");
-string userReturn = Console.ReadLine().ToLower();
+//test.CheckOutBook(Console.ReadLine().ToLower(), testList);
+//foreach (var item in testList)
+//{
+//    Console.WriteLine($"{item.Title} by {item.Author} is currently {item.ShelfStatus}, its due date is {item.DueDate}");
+//}
 
-test.ReturnBooks(userReturn, testList);
+////testing the AddABook method
+//Console.WriteLine("Please enter the title of the book to add");
+//string userTitle = Console.ReadLine().ToLower();
 
-foreach (var item in testList)
-{
-    Console.WriteLine($"{item.Title} by {item.Author} is currently {item.ShelfStatus}");
-}
+//Console.WriteLine("Now please enter the author");
+//string userAuthor = Console.ReadLine().ToLower();
 
-Console.ReadKey();
+//test.AddABook(userTitle, userAuthor, testList);
+
+//foreach (var item in testList)
+//{
+//    Console.WriteLine($"{item.Title} by {item.Author} is currently {item.ShelfStatus}");
+//}
+
+//// testing ReturnBook method
+//Console.WriteLine("Please enter the title of the book to return");
+//string userReturn = Console.ReadLine().ToLower();
+
+//test.ReturnBooks(userReturn, testList);
+
+//foreach (var item in testList)
+//{
+//    Console.WriteLine($"{item.Title} by {item.Author} is currently {item.ShelfStatus}");
+//}
+
+//Console.ReadKey();
+
+
+//////////////////////////////////////////////
+
+Library firstLibrary = HelperClass.InitializeLibrary();
+
+//foreach (Book inventory in firstLibrary.Books)
+//{
+//    Console.WriteLine($"{inventory.Title} {inventory.Author} {inventory.ShelfStatus}");
+//}
+
+firstLibrary.DisplayAllBooks();

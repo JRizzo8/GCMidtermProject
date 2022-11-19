@@ -9,23 +9,24 @@ namespace LibraryOfAlexandria
 {
     public static class HelperClass
     {
-        public static Library InitLibrary()
+        public static Library InitializeLibrary()
         {
             Library library = new Library();
             string workingDirectory = Environment.CurrentDirectory;
             string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
-            string bookFilePath = projectDirectory + @"\Inventory.txt";
+            string inventoryFilePath = projectDirectory + @"\Inventory.txt";
 
-            StreamReader reader = new StreamReader(bookFilePath);
-            while (true)
+            StreamReader reader = new StreamReader(inventoryFilePath);
+            while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
-                if (line == null)
-                {
-                    break;
-                }
+                //if (line == null)
+                //{
+                //    break;
+                //}
                 string[] sections = line.Split(',');
-                Book book = new Book(sections[0], sections[1], ShelfStatus.OnShelf);
+                Book book = new Book(sections[0], sections[1], ShelfStatus.OnShelf); //if we do the optional thing, defaulting to on shelf will be wrong,,
+                                                                                     //itll keep reseting all shelf status to on shelf everytime program is ran
                 library.Books.Add(book);
             }
             return library;
