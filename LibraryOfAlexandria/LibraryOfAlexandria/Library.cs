@@ -1,23 +1,26 @@
-﻿using System.Runtime.CompilerServices;
+
 
 namespace LibraryOfAlexandria
 {
     public class Library
     {
-    
+
         public List<Book> Books { get; set; } = new List<Book>();
+
+
 
         public Library() 
         {
         
         }
 
-        public void CheckOutBook(string title, List<Book> listToCheckBookOutOf) 
+
+        //RIZZO METHODS
+        public void CheckOutBook(string title, List<Book> listToCheckBookOutOf)
         {
             Books = listToCheckBookOutOf;
-            foreach(Book book in Books) 
-            {   
-
+            foreach (Book book in Books)
+            {
                 if (book.ShelfStatus.Equals(ShelfStatus.OnShelf) && book.Title == title)
                 {
                     book.ShelfStatus = ShelfStatus.OffShelf;
@@ -25,19 +28,17 @@ namespace LibraryOfAlexandria
                     book.DueDate = currentDate.AddDays(14);
                 }
             }
-            //rizzo
         }
 
-        public void AddABook(string title, string author, List<Book> listToAddBookTo )
+        public void AddABook(string title, string author, List<Book> listToAddBookTo)
         {
             Books = listToAddBookTo;
             Books.Add(new Book(title, author, ShelfStatus.OnShelf));
-
-            //rizzo
         }
         public void ReturnBooks(string title, List<Book> listToReturnBookTo)
         {
             Books = listToReturnBookTo;
+
             foreach(var item in Books) 
             {
                 if (item.Title == title && item.ShelfStatus == ShelfStatus.OffShelf) 
@@ -81,13 +82,17 @@ namespace LibraryOfAlexandria
 
 
             List<Book> availibleList = new List<Book>();
+
             foreach (var item in Books)
             {
-                if (item.ShelfStatus == 0)
+                if (item.Title == title && item.ShelfStatus == ShelfStatus.OffShelf)
                 {
-                    availibleList.Add(item);
+                    item.ShelfStatus = ShelfStatus.OnShelf;
                 }
+
             }
+
+
             return availibleList;
 
         }
@@ -103,6 +108,7 @@ namespace LibraryOfAlexandria
                 Console.WriteLine($"{book.Title} by {book.Author} is due {book.DueDate}");
             }
         }
+
         public List<Book> TitleSearch(List<Book> bookList)
         {
             List<Book> titleSearchResultsList = new List<Book>();
@@ -117,6 +123,7 @@ namespace LibraryOfAlexandria
             }
             return titleSearchResultsList;
         }
+
         public List<Book> AuthorSearch(List<Book> bookList)
 
         {
@@ -130,28 +137,64 @@ namespace LibraryOfAlexandria
             return authorSearchResultsList;
         }
 
-        // Amelia
-        public List<Book> DisplayAllBooks(string allBooks) //fyi i do not think i did this right at all, it feels redundant as fuck but i seriously just dont understand
+        //NICOLE METHODS
+        /*
+        public void DisplayCheckedOutList()
         {
-            List<Book> allBookList = new List<Book>();
+
+        }
+
+        public void DisplayRemovedBooks()
+        {
+
+        }
+
+        public void ListPastDueBooks()
+        {
+
+        }
+        */
+
+        //AMELIA METHODS
+        public void DisplayAllBooks()
+        {
+            Console.WriteLine($"All books: \n");
             foreach (var item in Books)
             {
-                allBookList.Add(item);
+                Console.WriteLine($"\"{item.Title}\" by {item.Author}");
+                if (item.ShelfStatus == 0)
+                {
+                    Console.ForegroundColor= ConsoleColor.Green;
+                    Console.WriteLine($"{item.ShelfStatus}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else //I dont fully know how many different shelf statuses we have so for now im just keeping it to On or Off
+                {
+                    Console.ForegroundColor= ConsoleColor.Red;
+                    Console.WriteLine($"{item.ShelfStatus}");
+                    Console.ForegroundColor= ConsoleColor.White;
+                }
             }
-            return allBookList;
-
-        public List<Book> DisplayAllBooks()
-
-        public void SearchByAuthor(string authorName)
-        {
-
-        }
-        public void SearchByTitle(string bookTitle)
-        {
         }
 
-
-
+        public void DisplayAvailableBooks()
+        {
+            Console.WriteLine($"Books available to check out: \n");
+            foreach (var item in Books)
+            {
+                if (item.ShelfStatus == 0)
+                {
+                    Console.WriteLine($"\"{item.Title}\" by {item.Author}");
+                }
+            }
+        }
     }
 }
 
+/* QUESTION SECTION
+
+L18: //can you just type book.ShelfStatus == 0 since the enum class has OnShelf's value is 0?
+CHECK HELPER CLASS FOR POSSIBLE ERROR
+Also Rachel Ray txt file author/title info is reversed
+
+*/
