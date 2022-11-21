@@ -72,9 +72,6 @@ using System.IO;
 
 Library firstLibrary = HelperClass.InitializeLibrary();
 
-//foreach (Book inventory in firstLibrary.Books)
-//{
-//    Console.WriteLine($"{inventory.Title} {inventory.Author} {inventory.ShelfStatus}");
-//}
+firstLibrary.DisplayAvailableBooks();
 
 firstLibrary.DisplayAllBooks();

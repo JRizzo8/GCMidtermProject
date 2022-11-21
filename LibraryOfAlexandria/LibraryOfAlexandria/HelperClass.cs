@@ -17,7 +17,7 @@ namespace LibraryOfAlexandria
             string inventoryFilePath = projectDirectory + @"\Inventory.txt";
 
             StreamReader reader = new StreamReader(inventoryFilePath);
-            while (!reader.EndOfStream)
+            while (!reader.EndOfStream) //replaced "true"
             {
                 string line = reader.ReadLine();
                 //if (line == null)

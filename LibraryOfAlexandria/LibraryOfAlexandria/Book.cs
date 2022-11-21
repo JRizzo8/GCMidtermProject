@@ -7,7 +7,6 @@
         public ShelfStatus ShelfStatus { get; set; }
         public DateTime DueDate { get; set; }
 
-
         //public Book()
         //{
 
