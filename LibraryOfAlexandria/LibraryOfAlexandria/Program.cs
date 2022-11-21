@@ -1,10 +1,13 @@
-﻿using LibraryOfAlexandria;
+
 using static System.Reflection.Metadata.BlobBuilder;
 
 
 using System.IO;
 
-//Library library = HelperClass.InitLibrary();
+
+
+Library library = HelperClass.InitLibrary();
+
 
 //List<Book> books = library.Books;
 
@@ -65,13 +68,7 @@ using System.IO;
 //    Console.WriteLine($"{item.Title} by {item.Author} is currently {item.ShelfStatus}");
 //}
 
-//Console.ReadKey();
 
 
-//////////////////////////////////////////////
+Console.ReadKey();
 
-Library firstLibrary = HelperClass.InitializeLibrary();
-
-firstLibrary.DisplayAvailableBooks();
-
-firstLibrary.DisplayAllBooks();
