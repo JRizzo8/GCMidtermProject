@@ -63,7 +63,8 @@
         {
 
         }
-        public List<Book> TitleSearch(List<Book> bookList)
+        // Need to add input validation for search methods
+        public Book TitleSearch(List<Book> bookList)
         {
             List<Book> titleSearchResultsList = new List<Book>();
             string titleSearchString = Console.ReadLine().ToLower();
@@ -72,9 +73,27 @@
             {
                 titleSearchResultsList.Add(result);
             }
-            return titleSearchResultsList;
+            //return titleSearchResultsList;
+
+            for (int i = 0; i < titleSearchResultsList.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}).{titleSearchResultsList[i].Title}");
+            }
+
+            Console.WriteLine(" Which book would you like to checkout?");
+
+            int userInt = int.Parse(Console.ReadLine());
+
+            Console.WriteLine(titleSearchResultsList[userInt - 1].Title);
+
+            Book userBook = titleSearchResultsList[userInt - 1];
+
+            Console.WriteLine(userBook.Title);
+
+            return userBook;
         }
-        public List<Book> AuthorSearch(List<Book> bookList)
+        // Need to add input validation for search methods
+        public Book AuthorSearch(List<Book> bookList)
         {
             List<Book> authorSearchResultsList = new List<Book>();
             string authorSearchString = Console.ReadLine().ToLower();
@@ -83,7 +102,23 @@
             {
                 authorSearchResultsList.Add(result);
             }
-            return authorSearchResultsList;
+            //return authorSearchResultsList;
+            for (int i = 0; i < authorSearchResultsList.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}).{authorSearchResultsList[i].Author}");
+            }
+
+            Console.WriteLine("Which book would you like to checkout?");
+
+            int userInt = int.Parse(Console.ReadLine());
+
+            Console.WriteLine(authorSearchResultsList[userInt - 1].Author);
+
+            Book userBook = authorSearchResultsList[userInt - 1];
+
+            Console.WriteLine(userBook.Author);
+
+            return userBook;
         }
         public List<Book> DisplayAllBooks()
 
