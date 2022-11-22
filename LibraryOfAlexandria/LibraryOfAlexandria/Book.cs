@@ -1,4 +1,4 @@
-
+namespace LibraryOfAlexandria
 {
     public class Book
     {
@@ -9,14 +9,6 @@
 
         //public Book()
         //{
-
-
-        //public Book()
-        //{
-
-
-        public Book()
-        {
 
         //}
 
