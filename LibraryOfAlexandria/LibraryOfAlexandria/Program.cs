@@ -64,7 +64,6 @@ while (loop == true)
                 Console.WriteLine(authorSearch.Author);
                 library.ReturnBooks(authorSearch);
                 Console.WriteLine(authorSearch.ShelfStatus);
-
             }
             break;
         case 4:
@@ -210,3 +209,4 @@ static void InventoryMethod(Library library)
 
 Console.ReadKey();
 
+}
