@@ -1,4 +1,4 @@
-﻿namespace LibraryOfAlexandria
+namespace LibraryOfAlexandria
 {
     public class Book
     {
@@ -7,10 +7,10 @@
         public ShelfStatus ShelfStatus { get; set; }
         public DateTime DueDate { get; set; }
 
-        public Book()
-        {
+        //public Book()
+        //{
 
-        }
+        //}
 
         public Book(string title, string author, ShelfStatus status)
         {
