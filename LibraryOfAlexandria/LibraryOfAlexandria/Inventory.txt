@@ -5,7 +5,7 @@ Dream Catcher,Stephen King,OnShelf
 The Shining,Stephen King,OnShelf
 Nineteen Eighty-Four,George Orwell,OnShelf
 Animal Farm,George Orwell,OnShelf
-Rachael Ray,30-Minute Meals 2,OnShelf
+30-Minute Meals 2,Rachael Ray,OnShelf
 Astronomy For the Soul,Jan Spiller,OnShelf
 Naruto,Masashi Kishimoto,OnShelf
 Long Walk To Freedom,Nelson Mandela,OnShelf
