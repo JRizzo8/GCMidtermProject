@@ -122,7 +122,7 @@ namespace LibraryOfAlexandria
                     Console.WriteLine($"{i + 1}.) {titleSearchResultsList[i].Title} by {titleSearchResultsList[i].Author}");
                 }
 
-                Console.Write("\nPlease enter the number of the book you'd like to check out: ");
+                Console.Write("\nPlease enter the number of the book you'd like to choose: ");
 
                 int userInt = int.Parse(Console.ReadLine());
                 Book userBook = titleSearchResultsList[userInt - 1];
@@ -162,7 +162,7 @@ namespace LibraryOfAlexandria
                     Console.WriteLine($"{i + 1}.) {authorSearchResultsList[i].Title} by {authorSearchResultsList[i].Author}");
                 }
 
-                Console.Write("\nPlease enter the number of the book you'd like to check out: ");
+                Console.Write("\nPlease enter the number of the book you'd like to like to choose: ");
 
                 int userInt = int.Parse(Console.ReadLine());
                 Book userBook = authorSearchResultsList[userInt - 1];
