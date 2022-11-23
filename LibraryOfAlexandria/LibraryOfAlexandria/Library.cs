@@ -16,18 +16,20 @@ namespace LibraryOfAlexandria
 
 
         //RIZZO METHODS
-        public void CheckOutBook(Book bookToReturn)
+        public bool CheckOutBook(Book bookToReturn)
         {
             List<Book> checkedOutBookList = Books.Where(x => x.ShelfStatus == ShelfStatus.OffShelf).ToList();
             if (checkedOutBookList.Contains(bookToReturn))
             {
                 Console.WriteLine($"Sorry, {bookToReturn.Title} has already been checked out");
-
+                return false;
             }
 
             bookToReturn.ShelfStatus = ShelfStatus.OffShelf;
             var currentDate = DateTime.Now;
             bookToReturn.DueDate = currentDate.AddDays(14);
+
+            return true;
         }
 
         public void AddABook(string title, string author)
@@ -100,7 +102,7 @@ namespace LibraryOfAlexandria
             }
         }
 
-        public Book SearchByTitle(List<Book> bookList)
+        public Book SearchByTitle(Library library, List<Book> bookList)
         {
             List<Book> titleSearchResultsList = new List<Book>();
 
@@ -132,6 +134,7 @@ namespace LibraryOfAlexandria
             {
                 Console.Clear();
                 Console.WriteLine($"A book with the title '{titleSearchString}' was not found, returning to main menu\n");
+                MenuClass.MainMenu(library);
                 //return to main menu
             }
 
@@ -140,7 +143,7 @@ namespace LibraryOfAlexandria
         }
 
 
-        public Book SearchByAuthor(List<Book> bookList)
+        public Book SearchByAuthor(Library library, List<Book> bookList)
         {
             List<Book> authorSearchResultsList = new List<Book>();
 
@@ -172,7 +175,7 @@ namespace LibraryOfAlexandria
             {
                 Console.Clear();
                 Console.WriteLine($"Author '{authorSearchString}' not found, returning to main menu\n");
-                //return to main menu
+                MenuClass.MainMenu(library);
             }
 
             //not sure what I should put for the return here, still working on this
