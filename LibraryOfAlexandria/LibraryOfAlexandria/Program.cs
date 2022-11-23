@@ -7,6 +7,7 @@ using LibraryOfAlexandria;
 using System.Runtime.CompilerServices;
 
 Library library = HelperClass.InitializeLibrary();
+
 bool loop = true;
 
     Console.WriteLine("Welcome to the library");
@@ -27,21 +28,25 @@ while (loop == true)
             InventoryMethod(library);
             break;
         case 2:
-            List<Book> availableBookList = library.Books.Where(x => x.ShelfStatus == ShelfStatus.OnShelf).ToList();
-            Console.WriteLine("What would you like to search by?");
-            Console.WriteLine("1.) Title");
-            Console.WriteLine("2.) Author)");
-            userChoice = int.Parse(Console.ReadLine());
-            if (userChoice == 1)
-            {
-                Book bookTitleSearch = library.TitleSearch(availableBookList);
-                library.CheckOutBook(bookTitleSearch);
-            }
-            else if (userChoice == 2)
-            {
-                Book authorSearch = library.AuthorSearch(availableBookList);
-                library.CheckOutBook(authorSearch);
-            }
+            //List<Book> checkedOutBookList = library.Books.Where(x => x.ShelfStatus == ShelfStatus.OffShelf).ToList();
+            //do
+            //{
+                Console.WriteLine("What would you like to search by?");
+                Console.WriteLine("1.) Title");
+                Console.WriteLine("2.) Author");
+                userChoice = int.Parse(Console.ReadLine());
+                if (userChoice == 1)
+                {
+                    Book bookTitleSearch = library.SearchByTitle(library.Books);
+                    library.CheckOutBook(bookTitleSearch);
+                }
+                else if (userChoice == 2)
+                {
+                    Book authorSearch = library.SearchByAuthor(library.Books);
+                    library.CheckOutBook(authorSearch);
+                }
+            //}
+            //while (true);
             break;
         case 3:
             List<Book> checkedOutBookList = library.Books.Where(x => x.ShelfStatus == ShelfStatus.OffShelf).ToList();
@@ -51,7 +56,7 @@ while (loop == true)
             userChoice = int.Parse(Console.ReadLine());
             if (userChoice == 1)
             {
-                Book bookTitleSearch = library.TitleSearch(checkedOutBookList);
+                Book bookTitleSearch = library.SearchByTitle(checkedOutBookList);
                 Console.WriteLine(bookTitleSearch.ShelfStatus);
                 Console.WriteLine(bookTitleSearch.Title);
                 library.ReturnBooks(bookTitleSearch);
@@ -60,7 +65,7 @@ while (loop == true)
             }
             else if (userChoice == 2)
             {
-                Book authorSearch = library.AuthorSearch(checkedOutBookList);
+                Book authorSearch = library.SearchByAuthor(checkedOutBookList);
                 Console.WriteLine(authorSearch.Author);
                 library.ReturnBooks(authorSearch);
                 Console.WriteLine(authorSearch.ShelfStatus);
@@ -207,6 +212,3 @@ static void InventoryMethod(Library library)
 
 
 
-Console.ReadKey();
-
-}
