@@ -16,11 +16,20 @@ namespace LibraryOfAlexandria
 
 
         //RIZZO METHODS
-        public void CheckOutBook(Book bookToReturn)
+        public bool CheckOutBook(Book bookToReturn)
         {
+            List<Book> checkedOutBookList = Books.Where(x => x.ShelfStatus == ShelfStatus.OffShelf).ToList();
+            if (checkedOutBookList.Contains(bookToReturn))
+            {
+                Console.WriteLine($"Sorry, {bookToReturn.Title} has already been checked out");
+                return false;
+            }
+
             bookToReturn.ShelfStatus = ShelfStatus.OffShelf;
             var currentDate = DateTime.Now;
             bookToReturn.DueDate = currentDate.AddDays(14);
+
+            return true;
         }
 
         public void AddABook(string title, string author)
@@ -93,64 +102,84 @@ namespace LibraryOfAlexandria
             }
         }
 
-
-
-
-        public Book TitleSearch(List<Book> bookList)
+        public Book SearchByTitle(Library library, List<Book> bookList)
         {
             List<Book> titleSearchResultsList = new List<Book>();
+
+            Console.Write("Please enter a title to search by: ");
             string titleSearchString = Console.ReadLine().ToLower();
 
             foreach (var result in bookList.Where(x => x.Title.ToLower().IndexOf(titleSearchString) == 0))
             {
                 titleSearchResultsList.Add(result);
             }
-            //return titleSearchResultsList;
 
-            for (int i = 0; i < titleSearchResultsList.Count; i++)
+            if (titleSearchResultsList.Count > 0)
             {
-                Console.WriteLine($"{i + 1}).{titleSearchResultsList[i].Title}");
+                Console.Clear();
+                Console.WriteLine($"Found {titleSearchResultsList.Count} book(s)");
+
+                for (int i = 0; i < titleSearchResultsList.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}.) {titleSearchResultsList[i].Title} by {titleSearchResultsList[i].Author}");
+                }
+
+                Console.Write("\nPlease enter the number of the book you'd like to choose: ");
+
+                int userInt = int.Parse(Console.ReadLine());
+                Book userBook = titleSearchResultsList[userInt - 1];
+                return userBook;
+            }
+            else if (!titleSearchResultsList.Any())
+            {
+                Console.Clear();
+                Console.WriteLine($"A book with the title '{titleSearchString}' was not found, returning to main menu\n");
+                MenuClass.MainMenu(library);
+                //return to main menu
             }
 
-            Console.WriteLine(" Which book would you like to checkout?");
-
-            int userInt = int.Parse(Console.ReadLine());
-
-            Console.WriteLine(titleSearchResultsList[userInt - 1].Title);
-
-            Book userBook = titleSearchResultsList[userInt - 1];
-
-            Console.WriteLine(userBook.Title);
-
-            return userBook;
+            //not sure what I should put for the return here, still working on this
+            throw new Exception("SearchByTitle Method Exception");
         }
-        // Need to add input validation for search methods
-        public Book AuthorSearch(List<Book> bookList)
+
+
+        public Book SearchByAuthor(Library library, List<Book> bookList)
         {
             List<Book> authorSearchResultsList = new List<Book>();
+
+            Console.Write("Please enter an author to search by: ");
             string authorSearchString = Console.ReadLine().ToLower();
 
             foreach (var result in bookList.Where(x => x.Author.ToLower().IndexOf(authorSearchString) == 0))
             {
                 authorSearchResultsList.Add(result);
             }
-            //return authorSearchResultsList;
-            for (int i = 0; i < authorSearchResultsList.Count; i++)
+
+            if (authorSearchResultsList.Count > 0)
             {
-                Console.WriteLine($"{i + 1}).{authorSearchResultsList[i].Author}");
+                Console.Clear();
+                Console.WriteLine($"Found {authorSearchResultsList.Count} book(s)");
+
+                for (int i = 0; i < authorSearchResultsList.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}.) {authorSearchResultsList[i].Title} by {authorSearchResultsList[i].Author}");
+                }
+
+                Console.Write("\nPlease enter the number of the book you'd like to like to choose: ");
+
+                int userInt = int.Parse(Console.ReadLine());
+                Book userBook = authorSearchResultsList[userInt - 1];
+                return userBook;
+            }
+            else if (!authorSearchResultsList.Any())
+            {
+                Console.Clear();
+                Console.WriteLine($"Author '{authorSearchString}' not found, returning to main menu\n");
+                MenuClass.MainMenu(library);
             }
 
-            Console.WriteLine("Which book would you like to checkout?");
-
-            int userInt = int.Parse(Console.ReadLine());
-
-            Console.WriteLine(authorSearchResultsList[userInt - 1].Author);
-
-            Book userBook = authorSearchResultsList[userInt - 1];
-
-            Console.WriteLine(userBook.Author);
-
-            return userBook;
+            //not sure what I should put for the return here, still working on this
+            throw new Exception("SearchByAuthor Method Exception");
         }
 
 
