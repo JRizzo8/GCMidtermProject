@@ -15,7 +15,7 @@ namespace LibraryOfAlexandria
             Console.WriteLine("2.) Checkout Book");
             Console.WriteLine("3.) Return Book");
             Console.WriteLine("4.) Donate Book");
-            Console.WriteLine("5.) Quite");
+            Console.WriteLine("5.) Quit");
 
             int userChoice = int.Parse(Console.ReadLine());
 
@@ -119,7 +119,6 @@ namespace LibraryOfAlexandria
                         MainMenu(library);
                     }
                 }
-
             }
             else if(action == "return")
             {
@@ -138,7 +137,6 @@ namespace LibraryOfAlexandria
                     Book authorSearch = library.SearchByAuthor(library, checkedOutBookList);
                     library.ReturnBooks(authorSearch);
                 }
-
             }
         }
         public static void DonateMenu(Library library)
@@ -150,7 +148,6 @@ namespace LibraryOfAlexandria
             string author = Console.ReadLine();
             library.AddABook(title, author);
             Console.WriteLine("Thank you for your donation!");
-
         }
     }
 }
