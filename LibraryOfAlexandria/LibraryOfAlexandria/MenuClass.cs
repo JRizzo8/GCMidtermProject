@@ -15,7 +15,8 @@ namespace LibraryOfAlexandria
             Console.WriteLine("2.) Checkout Book");
             Console.WriteLine("3.) Return Book");
             Console.WriteLine("4.) Donate Book");
-            Console.WriteLine("5.) Quit");
+            Console.WriteLine("5.) Ban a Book"); //rizzo
+            Console.WriteLine("6.) Quit");
 
             int userChoice = int.Parse(Console.ReadLine());
 
@@ -34,6 +35,8 @@ namespace LibraryOfAlexandria
                     DonateMenu(library);
                     break;
                 case 5:
+                    SearchMenu(library, "ban"); //rizzo
+                case 6:
                     Environment.Exit(0);
                     break;
             }
@@ -45,6 +48,7 @@ namespace LibraryOfAlexandria
             Console.WriteLine("1.) Total Inventory");
             Console.WriteLine("2.) Available Books");
             Console.WriteLine("3.) Checked Out Books");
+            Console.WriteLine("4.) Banned Books"); //rizzo
 
             int userChoice = int.Parse(Console.ReadLine());
 
@@ -60,6 +64,10 @@ namespace LibraryOfAlexandria
                     break;
                 case 3:
                     library.DisplayCheckedOutList();
+                    MainMenu(library);
+                    break;
+                case 4:
+                    library.DisplayBannedList(); //added to display banned list - rizzo
                     MainMenu(library);
                     break;
             }
@@ -136,6 +144,24 @@ namespace LibraryOfAlexandria
                 {
                     Book authorSearch = library.SearchByAuthor(library, checkedOutBookList);
                     library.ReturnBooks(authorSearch);
+                }
+            }
+            else if (action == "ban") //rizzo
+            {
+             
+                Console.WriteLine("Select an option to find the book you'd like to ban");
+                Console.WriteLine("1.) By Title");
+                Console.WriteLine("2.) By Author");
+                userChoice = int.Parse(Console.ReadLine());
+                if (userChoice == 1)
+                {
+                    Book bookTitleSearch = library.SearchByTitle(library, library.Books); //not sure if im searching the library right here since initially there wont be banned books
+                    library.ChangeBanStatus(bookTitleSearch);
+                }
+                else if (userChoice == 2)
+                {
+                    Book authorSearch = library.SearchByAuthor(library, library.Books);
+                    library.ChangeBanStatus(authorSearch);
                 }
             }
         }

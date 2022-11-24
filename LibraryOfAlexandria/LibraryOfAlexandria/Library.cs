@@ -36,12 +36,61 @@ namespace LibraryOfAlexandria
         {
             Books.Add(new Book(title, author, ShelfStatus.OnShelf));
         }
+
         public void ReturnBooks(Book bookToReturn)
         {
             bookToReturn.ShelfStatus = ShelfStatus.OnShelf;
         }
-            //rizzo
-        
+
+        public void ChangeBanStatus(Book bookToChange)
+        {
+            if (bookToChange.ShelfStatus == ShelfStatus.Banned)
+            {
+                bookToChange.ShelfStatus = ShelfStatus.OnShelf;
+                Console.WriteLine($"{bookToChange} has been un-banned and put back on the shelf");
+            }
+            else
+            {
+                bookToChange.ShelfStatus = ShelfStatus.Banned;
+                Console.WriteLine($"{bookToChange} has been banned");
+            }
+        }
+
+        public void DisplayBannedList()
+        {
+            IEnumerable<Book> bannedBooks = from book in Books
+                                            where book.ShelfStatus == ShelfStatus.Banned
+                                            select book;
+
+
+            Console.WriteLine("The following books are banned \n");
+
+            foreach (var book in bannedBooks)
+            {
+                Console.WriteLine($"{book.Title} by {book.Author} is currently {book.ShelfStatus}");
+            }
+
+        }
+
+        public void ListPastDueBooks() //someone else maybe already did? found empty method and filled it out of interest
+        {
+            var currentDate = DateTime.Now;
+            IEnumerable<Book> overDueBooks = from book in Books
+                                             where (book.DueDate - currentDate).TotalDays >= 14
+                                             select book;
+
+            Console.WriteLine("The Books currently past due are \n");
+
+            foreach (var book in overDueBooks)
+            {
+                Console.WriteLine($"{book.Title} by {book.Author} is {book.ShelfStatus} and was due on {book.DueDate}");
+            }
+
+
+
+        }
+        // end rizzo
+
 
         public void DisplayCheckedOutList()
         {
@@ -56,39 +105,6 @@ namespace LibraryOfAlexandria
 
         }
 
-        public void DisplayRemovedBooks()
-        {
-
-        }
-
-        //public List<Book> DisplayAvailableBooks(string available)
-        //{
-
-        //    IEnumerable<Book> availableBooks = from book in Books
-        //                                        where book.ShelfStatus == ShelfStatus.OnShelf
-        //                                        select book;
-
-        //    foreach (var book in availableBooks)
-        //    {
-        //        Console.WriteLine($"{book.Title} by {book.Author}");
-        //    }
-
-
-        //    List<Book> availibleList = new List<Book>();
-
-        //    foreach (var item in Books)
-        //    {
-        //        if (item.Title == title && item.ShelfStatus == ShelfStatus.OffShelf)
-        //        {
-        //            item.ShelfStatus = ShelfStatus.OnShelf;
-        //        }
-
-        //    }
-
-
-        //    return availibleList;
-
-        //}
 
         public void CheckDueDate()
         {
@@ -182,23 +198,6 @@ namespace LibraryOfAlexandria
             throw new Exception("SearchByAuthor Method Exception");
         }
 
-
-        //public void DisplayCheckedOutList()
-        //{
-
-        //}
-
-        //public void DisplayRemovedBooks()
-        //{
-
-        //}
-
-        public void ListPastDueBooks()
-        {
-
-        }
-        //*/
-
         //AMELIA METHODS
         public void DisplayAllBooks()
         {
@@ -234,11 +233,3 @@ namespace LibraryOfAlexandria
         }
     }
 }
-
-/* QUESTION SECTION
-
-L18: //can you just type book.ShelfStatus == 0 since the enum class has OnShelf's value is 0?
-CHECK HELPER CLASS FOR POSSIBLE ERROR
-Also Rachel Ray txt file author/title info is reversed
-
-*/
