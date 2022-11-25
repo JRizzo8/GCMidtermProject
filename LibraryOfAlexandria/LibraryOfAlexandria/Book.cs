@@ -8,16 +8,6 @@
         public DateTime DueDate { get; set; }
 
 
-        //public Book()
-        //{
-
-
-        public Book()
-        {
-
-
-        //}
-
         public Book(string title, string author, ShelfStatus status)
         {
             Title = title;
