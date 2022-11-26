@@ -22,7 +22,7 @@ namespace LibraryOfAlexandria
                 Console.WriteLine("5.) Check Due Date");
                 Console.WriteLine("6.) Ban a Book"); //rizzo
                 Console.WriteLine("7.) I am Julius Ceasar, you killed my father, prepare to die");
-                Console.WriteLine("7.) Quit");
+                Console.WriteLine("8.) Quit");
 
                 int userChoice = Validator.ValidateUserNumber();
 
