@@ -39,6 +39,7 @@ namespace LibraryOfAlexandria
         public void ReturnBooks(Book bookToReturn)
         {
             bookToReturn.ShelfStatus = ShelfStatus.OnShelf;
+            
         }
 
         public void ChangeBanStatus(Book bookToChange)
@@ -64,9 +65,19 @@ namespace LibraryOfAlexandria
 
             Console.WriteLine("The following books are banned \n");
 
-            foreach (var book in bannedBooks)
+            MenuClass.ListBooksWithoutStatus(bannedBooks.ToList());
+
+        }
+
+        public void DisplayCheckedOutList()
+        {
+            IEnumerable<Book> checkedOutBooks = from book in Books
+                                                where book.ShelfStatus == ShelfStatus.OffShelf
+                                                select book;
+
+            foreach (var book in checkedOutBooks)
             {
-                Console.WriteLine($"{book.Title} by {book.Author} is currently {book.ShelfStatus}");
+                Console.WriteLine($"{book.Title} by {book.Author}");
             }
 
         }
@@ -189,34 +200,30 @@ namespace LibraryOfAlexandria
         public void DisplayAllBooks()
         {
             Console.WriteLine($"All books: \n");
-            foreach (var item in Books)
-            {
-                Console.WriteLine($"\"{item.Title}\" by {item.Author}");
-                if (item.ShelfStatus == 0)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"{item.ShelfStatus}");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else //I dont fully know how many different shelf statuses we have so for now im just keeping it to On or Off
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"{item.ShelfStatus}");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-            }
+            MenuClass.ListBooksWithStatus(Books);
+            //foreach (var item in Books)
+            //{
+            //    //Console.WriteLine($"\"{item.Title}\" by {item.Author}");
+            //    //if (item.ShelfStatus == 0)
+            //    //{
+            //    //    Console.ForegroundColor = ConsoleColor.Green;
+            //    //    Console.WriteLine($"{item.ShelfStatus}");
+            //    //    Console.ForegroundColor = ConsoleColor.White;
+            //    //}
+            //    //else //I dont fully know how many different shelf statuses we have so for now im just keeping it to On or Off
+            //    //{
+            //    //    Console.ForegroundColor = ConsoleColor.Red;
+            //    //    Console.WriteLine($"{item.ShelfStatus}");
+            //    //    Console.ForegroundColor = ConsoleColor.White;
+            //    //}
+            //}
         }
 
         public void DisplayAvailableBooks()
         {
             Console.WriteLine($"Books available to check out: \n");
-            foreach (var item in Books)
-            {
-                if (item.ShelfStatus == 0)
-                {
-                    Console.WriteLine($"\"{item.Title}\" by {item.Author}");
-                }
-            }
+            List<Book> availableBooks = Books.Where(x => x.ShelfStatus.ToString() == ShelfStatus.OnShelf.ToString()).ToList();
+            MenuClass.ListBooksWithoutStatus(availableBooks);
         }
     }
 }

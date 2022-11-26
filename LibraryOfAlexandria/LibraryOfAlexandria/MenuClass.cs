@@ -12,18 +12,18 @@ namespace LibraryOfAlexandria
         {
             bool condition = false;
 
-            Console.WriteLine("What would like to do");
-            Console.WriteLine("1.) Browse Inventory");
-            Console.WriteLine("2.) Checkout Book");
-            Console.WriteLine("3.) Return Book");
-            Console.WriteLine("4.) Donate Book");
-            Console.WriteLine("5.) Check Due Date");
-            Console.WriteLine("6.) Quit");
-            Console.WriteLine("5.) Ban a Book"); //rizzo
-            Console.WriteLine("6.) Quit");
-
             while (!condition)
             {
+                Console.WriteLine("What would like to do");
+                Console.WriteLine("1.) Browse Inventory");
+                Console.WriteLine("2.) Checkout Book");
+                Console.WriteLine("3.) Return Book");
+                Console.WriteLine("4.) Donate Book");
+                Console.WriteLine("5.) Check Due Date");
+                Console.WriteLine("6.) Ban a Book"); //rizzo
+                Console.WriteLine("7.) I am Julius Ceasar, you killed my father, prepare to die");
+                Console.WriteLine("7.) Quit");
+
                 int userChoice = Validator.ValidateUserNumber();
 
                 switch (userChoice)
@@ -44,6 +44,12 @@ namespace LibraryOfAlexandria
                         DueDateMenu(library);
                         break;
                     case 6:
+                        SearchMenu(library, "ban"); //rizzo
+                        break;
+                    case 7:
+                        BurnItAll();
+                        break;
+                    case 8:
                         Environment.Exit(0);
                         break;
                     default:
@@ -51,28 +57,6 @@ namespace LibraryOfAlexandria
                         break;
                 }
             }
-            switch (userChoice)
-            {
-                case 1:
-                    ListMenu(library);
-                    break;
-                case 2:
-                    SearchMenu(library, "checkout");
-                    break;
-                case 3:
-                    SearchMenu(library, "return");
-                    break;
-                case 4:
-                    DonateMenu(library);
-                    break;
-                case 5:
-                    SearchMenu(library, "ban"); //rizzo
-                case 6:
-                    Environment.Exit(0);
-                    break;
-            }
-        }
-
         }
 
         static void ListMenu(Library library)
@@ -89,26 +73,6 @@ namespace LibraryOfAlexandria
             {
                 int userChoice = Validator.ValidateUserNumber();
 
-            switch (userChoice)
-            {
-                case 1:
-                    library.DisplayAllBooks();
-                    MainMenu(library);
-                    break;
-                case 2:
-                    library.DisplayAvailableBooks();
-                    MainMenu(library);
-                    break;
-                case 3:
-                    library.DisplayCheckedOutList();
-                    MainMenu(library);
-                    break;
-                case 4:
-                    library.DisplayBannedList(); //added to display banned list - rizzo
-                    MainMenu(library);
-                    break;
-            }
-        }
                 switch (userChoice)
                 {
                     case 1:
@@ -123,8 +87,9 @@ namespace LibraryOfAlexandria
                         library.DisplayCheckedOutList();
                         MainMenu(library);
                         break;
-                    default:
-                        Console.WriteLine("Sorry, that is not an option. Please try again.");
+                    case 4:
+                        library.DisplayBannedList(); //added to display banned list - rizzo
+                        MainMenu(library);
                         break;
                 }
             }
@@ -143,7 +108,7 @@ namespace LibraryOfAlexandria
                 Console.WriteLine("2.) Author");
 
                 while (true)
-                {                   
+                {
                     userChoice = Validator.GetNumberInRange(1, 2);
 
                     if (userChoice == 1)
@@ -199,25 +164,21 @@ namespace LibraryOfAlexandria
                 Console.WriteLine("1.) By Title");
                 Console.WriteLine("2.) By Author");
 
-                while (true)
+                userChoice = Validator.GetNumberInRange(1, 2);
+                if (userChoice == 1)
                 {
-                    userChoice = Validator.GetNumberInRange(1, 2);
-                    if (userChoice == 1)
-                    {
-                        Book bookTitleSearch = library.SearchByTitle(library, checkedOutBookList);
-                        library.ReturnBooks(bookTitleSearch);
-                    }
-                    else if (userChoice == 2)
-                    {
-                        Book authorSearch = library.SearchByAuthor(library, checkedOutBookList);
-                        library.ReturnBooks(authorSearch);
-                    }
+                    Book bookTitleSearch = library.SearchByTitle(library, checkedOutBookList);
+                    library.ReturnBooks(bookTitleSearch);
                 }
-                
+                else if (userChoice == 2)
+                {
+                    Book authorSearch = library.SearchByAuthor(library, checkedOutBookList);
+                    library.ReturnBooks(authorSearch);
+                }
             }
             else if (action == "ban") //rizzo
             {
-             
+
                 Console.WriteLine("Select an option to find the book you'd like to ban");
                 Console.WriteLine("1.) By Title");
                 Console.WriteLine("2.) By Author");
@@ -234,6 +195,7 @@ namespace LibraryOfAlexandria
                 }
             }
         }
+
         public static void DonateMenu(Library library)
         {
             Console.WriteLine("Add a book");
@@ -248,6 +210,95 @@ namespace LibraryOfAlexandria
         public static void DueDateMenu(Library library)
         {
             library.CheckDueDate(library);
+        }
+
+        public static void ListBooksWithStatus(List<Book> bookList)
+        {
+            string format = "{0,-34} {1,-35}";
+            string[] heading = new string[] { "Title", "Author" };
+            string availabilityFormat = "{0, -35}";
+            string[] availabilityheading = new string[] { "Availability" };
+            Console.Write(string.Format(format, heading));
+            Console.WriteLine(string.Format(availabilityFormat, availabilityheading));
+            Console.WriteLine("----------------------------------------------------------------------------------");
+
+            for (int i = 0; i < bookList.Count; i++)
+            {
+                string[] row = new string[] { bookList[i].Title, bookList[i].Author };
+                Console.Write(string.Format(format, row));
+                switch (bookList[i].ShelfStatus.ToString())
+                {
+                    case "OnShelf":
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        break;
+                    case "OffShelf":
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        break;
+                }
+
+                Console.WriteLine(string.Format(availabilityFormat, bookList[i].ShelfStatus.ToString()));
+
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            Console.WriteLine("");
+        }
+
+        public static void ListBooksWithoutStatus(List<Book> bookList)
+        {
+            string format = "{0,-34} {1,-35}";
+            string[] heading = new string[] { "Title", "Author" };
+            Console.WriteLine(string.Format(format, heading));
+            Console.WriteLine("------------------------------------------------------");
+
+            for (int i = 0; i < bookList.Count; i++)
+            {
+                string[] row = new string[] { bookList[i].Title, bookList[i].Author };
+                Console.WriteLine(string.Format(format, row));
+            }
+            Console.WriteLine("");
+        }
+
+
+
+        public static void BurnItAll()
+        {
+            //set text color
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            //random number
+            Random rand = new Random();
+
+            //string pattern to print
+            String str = "";
+
+            //loop to display string pattern
+            //you can change the no. of times the loop execute
+            for (int i = 0; i < 20000; i++)
+            {
+                //create new string pattern
+                if (i % 2 == 0)
+                {
+                    str = "";
+                    for (int j = 0; j < 200; j++)
+                    {
+                        int n = rand.Next(10);
+                        if (n < 2)
+                        {
+                            str += n.ToString();
+                        }
+                        else
+                        {
+                            str += " ";
+                        }
+                    }
+                }
+
+                //print str pattern
+                Console.WriteLine(str);
+            }
         }
     }
 }
