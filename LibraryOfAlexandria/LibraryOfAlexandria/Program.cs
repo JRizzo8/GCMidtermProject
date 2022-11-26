@@ -1,4 +1,3 @@
-
 using static System.Reflection.Metadata.BlobBuilder;
 
 using System.IO;

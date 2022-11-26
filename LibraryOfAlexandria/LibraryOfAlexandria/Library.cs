@@ -14,9 +14,8 @@ namespace LibraryOfAlexandria
         
         }
 
-
-        //RIZZO METHODS
-        public bool CheckOutBook(Book bookToReturn)
+        // RIZZO Methods
+        public bool CheckOutBook(Book bookToReturn) 
         {
             List<Book> checkedOutBookList = Books.Where(x => x.ShelfStatus == ShelfStatus.OffShelf).ToList();
             if (checkedOutBookList.Contains(bookToReturn))
@@ -40,9 +39,8 @@ namespace LibraryOfAlexandria
         {
             bookToReturn.ShelfStatus = ShelfStatus.OnShelf;
         }
-            //rizzo
-        
 
+        // NICOLE Methods
         public void DisplayCheckedOutList()
         {
             IEnumerable<Book> checkedOutBooks = from book in Books
@@ -56,52 +54,40 @@ namespace LibraryOfAlexandria
 
         }
 
-        public void DisplayRemovedBooks()
+        public void CheckDueDate(Library library)
         {
+            Console.WriteLine("What is the title of the book you would like to check the due date of?");
+            string choice = "";
+            choice = Console.ReadLine();
+            IEnumerable<Book> checkedOutBooks = from book in Books
+                                                where book.ShelfStatus == ShelfStatus.OffShelf
+                                                select book;
 
-        }
-
-        //public List<Book> DisplayAvailableBooks(string available)
-        //{
-
-        //    IEnumerable<Book> availableBooks = from book in Books
-        //                                        where book.ShelfStatus == ShelfStatus.OnShelf
-        //                                        select book;
-
-        //    foreach (var book in availableBooks)
-        //    {
-        //        Console.WriteLine($"{book.Title} by {book.Author}");
-        //    }
-
-
-        //    List<Book> availibleList = new List<Book>();
-
-        //    foreach (var item in Books)
-        //    {
-        //        if (item.Title == title && item.ShelfStatus == ShelfStatus.OffShelf)
-        //        {
-        //            item.ShelfStatus = ShelfStatus.OnShelf;
-        //        }
-
-        //    }
-
-
-        //    return availibleList;
-
-        //}
-
-        public void CheckDueDate()
-        {
-            IEnumerable<Book> bookDueDate = from book in Books                                    
-                                             orderby book ascending
-                                             select book;
-
-            foreach (var book in bookDueDate)
+            if (checkedOutBooks.Count() > 0)
             {
-                Console.WriteLine($"{book.Title} by {book.Author} is due {book.DueDate}");
+                for (int i = 0; i < Books.Count(); i++)
+                {
+                    if ((Books[i].Title.ToLower().Contains(choice)) && Books[i].ShelfStatus == ShelfStatus.OffShelf)
+                    {
+                        Console.WriteLine($"The due date of {Books[i].Title} is {Books[i].DueDate}");
+                    }
+                    else if ((Books[i].Title.Contains(choice)) && Books[i].ShelfStatus == ShelfStatus.OffShelf)
+                    {
+                        Console.WriteLine($"The due date of {Books[i].Title} is {Books[i].DueDate}");
+                    }
+                }
+                MenuClass.MainMenu(library);
             }
+            else
+            {
+                Console.WriteLine("That book is not checked out at this time or is unavailable at this library.");
+                MenuClass.MainMenu(library);
+            }
+
+
         }
 
+        // COLIN Methods
         public Book SearchByTitle(Library library, List<Book> bookList)
         {
             List<Book> titleSearchResultsList = new List<Book>();
@@ -126,8 +112,8 @@ namespace LibraryOfAlexandria
 
                 Console.Write("\nPlease enter the number of the book you'd like to choose: ");
 
-                int userInt = int.Parse(Console.ReadLine());
-                Book userBook = titleSearchResultsList[userInt - 1];
+                int userInt = Validator.ValidateUserNumber();
+                Book userBook = titleSearchResultsList[userInt - 1]; // Throws IndexOutofRangeException when any number outside of number of titles in search is given
                 return userBook;
             }
             else if (!titleSearchResultsList.Any())
@@ -182,24 +168,7 @@ namespace LibraryOfAlexandria
             throw new Exception("SearchByAuthor Method Exception");
         }
 
-
-        //public void DisplayCheckedOutList()
-        //{
-
-        //}
-
-        //public void DisplayRemovedBooks()
-        //{
-
-        //}
-
-        public void ListPastDueBooks()
-        {
-
-        }
-        //*/
-
-        //AMELIA METHODS
+        // Amelia
         public void DisplayAllBooks()
         {
             Console.WriteLine($"All books: \n");
@@ -208,15 +177,15 @@ namespace LibraryOfAlexandria
                 Console.WriteLine($"\"{item.Title}\" by {item.Author}");
                 if (item.ShelfStatus == 0)
                 {
-                    Console.ForegroundColor= ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"{item.ShelfStatus}");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 else //I dont fully know how many different shelf statuses we have so for now im just keeping it to On or Off
                 {
-                    Console.ForegroundColor= ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"{item.ShelfStatus}");
-                    Console.ForegroundColor= ConsoleColor.White;
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
             }
         }
