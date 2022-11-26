@@ -35,21 +35,38 @@ namespace LibraryOfAlexandria
         {
             Books.Add(new Book(title, author, ShelfStatus.OnShelf));
         }
+
         public void ReturnBooks(Book bookToReturn)
         {
             bookToReturn.ShelfStatus = ShelfStatus.OnShelf;
         }
 
-        // NICOLE Methods
-        public void DisplayCheckedOutList()
+        public void ChangeBanStatus(Book bookToChange)
         {
-            IEnumerable<Book> checkedOutBooks = from book in Books
-                                                where book.ShelfStatus == ShelfStatus.OffShelf
-                                                select book;
-
-            foreach (var book in checkedOutBooks)
+            if (bookToChange.ShelfStatus == ShelfStatus.Banned)
             {
-                Console.WriteLine($"{book.Title} by {book.Author}");
+                bookToChange.ShelfStatus = ShelfStatus.OnShelf;
+                Console.WriteLine($"{bookToChange} has been un-banned and put back on the shelf");
+            }
+            else
+            {
+                bookToChange.ShelfStatus = ShelfStatus.Banned;
+                Console.WriteLine($"{bookToChange} has been banned");
+            }
+        }
+
+        public void DisplayBannedList()
+        {
+            IEnumerable<Book> bannedBooks = from book in Books
+                                            where book.ShelfStatus == ShelfStatus.Banned
+                                            select book;
+
+
+            Console.WriteLine("The following books are banned \n");
+
+            foreach (var book in bannedBooks)
+            {
+                Console.WriteLine($"{book.Title} by {book.Author} is currently {book.ShelfStatus}");
             }
 
         }
@@ -203,11 +220,3 @@ namespace LibraryOfAlexandria
         }
     }
 }
-
-/* QUESTION SECTION
-
-L18: //can you just type book.ShelfStatus == 0 since the enum class has OnShelf's value is 0?
-CHECK HELPER CLASS FOR POSSIBLE ERROR
-Also Rachel Ray txt file author/title info is reversed
-
-*/
