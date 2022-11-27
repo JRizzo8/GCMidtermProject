@@ -164,6 +164,7 @@ namespace LibraryOfAlexandria
         // COLIN Methods
         public Book SearchByTitle(Library library, List<Book> bookList)
         {
+            Console.Clear();
             List<Book> titleSearchResultsList = new List<Book>();
             Console.WriteLine(" ---------------------------");
             Console.WriteLine("| Check Out / Returns / Ban |");
@@ -220,6 +221,7 @@ namespace LibraryOfAlexandria
         {
             List<Book> authorSearchResultsList = new List<Book>();
 
+            Console.Clear();
             Console.Write("Please enter an author to search by: ");
             string authorSearchString = Console.ReadLine().ToLower();
 
