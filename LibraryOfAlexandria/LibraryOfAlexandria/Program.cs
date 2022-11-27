@@ -5,6 +5,6 @@ using LibraryOfAlexandria;
 using System.Runtime.CompilerServices;
 
 Library library = HelperClass.InitializeLibrary();
-Console.WriteLine("Welcome to the library\n");
+Console.WriteLine("Welcome to the Library of Alexandria!\n");
 MenuClass.MainMenu(library);
 

@@ -75,10 +75,7 @@ namespace LibraryOfAlexandria
                                                 where book.ShelfStatus == ShelfStatus.OffShelf
                                                 select book;
 
-            foreach (var book in checkedOutBooks)
-            {
-                Console.WriteLine($"{book.Title} by {book.Author}");
-            }
+            MenuClass.ListBooksWithoutStatus(checkedOutBooks.ToList());
 
         }
 
@@ -97,18 +94,18 @@ namespace LibraryOfAlexandria
                 {
                     if ((Books[i].Title.ToLower().Contains(choice)) && Books[i].ShelfStatus == ShelfStatus.OffShelf)
                     {
-                        Console.WriteLine($"The due date of {Books[i].Title} is {Books[i].DueDate}");
+                        Console.WriteLine($"The due date of {Books[i].Title} is {Books[i].DueDate} \n\n");
                     }
                     else if ((Books[i].Title.Contains(choice)) && Books[i].ShelfStatus == ShelfStatus.OffShelf)
                     {
-                        Console.WriteLine($"The due date of {Books[i].Title} is {Books[i].DueDate}");
+                        Console.WriteLine($"The due date of {Books[i].Title} is {Books[i].DueDate} \n\n");
                     }
                 }
                 MenuClass.MainMenu(library);
             }
             else
             {
-                Console.WriteLine("That book is not checked out at this time or is unavailable at this library.");
+                Console.WriteLine("That book is not checked out at this time or is unavailable at this library.\n\n");
                 MenuClass.MainMenu(library);
             }
 
@@ -199,8 +196,9 @@ namespace LibraryOfAlexandria
         // Amelia
         public void DisplayAllBooks()
         {
-            Console.WriteLine($"All books: \n");
+            Console.WriteLine();
             MenuClass.ListBooksWithStatus(Books);
+            Console.WriteLine($"\n\n");
             //foreach (var item in Books)
             //{
             //    //Console.WriteLine($"\"{item.Title}\" by {item.Author}");

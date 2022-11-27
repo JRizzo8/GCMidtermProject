@@ -14,17 +14,21 @@ namespace LibraryOfAlexandria
 
             while (!condition)
             {
-                Console.WriteLine("What would like to do");
-                Console.WriteLine("1.) Browse Inventory");
+                Console.WriteLine(" ------------------- ");
+                Console.WriteLine("| Main Menu Options |");
+                Console.WriteLine(" ------------------- ");
+                Console.WriteLine("1.) Browse Books");
                 Console.WriteLine("2.) Checkout Book");
                 Console.WriteLine("3.) Return Book");
                 Console.WriteLine("4.) Donate Book");
                 Console.WriteLine("5.) Check Due Date");
                 Console.WriteLine("6.) Ban a Book"); //rizzo
-                Console.WriteLine("7.) I am Julius Ceasar, you killed my father, prepare to die");
+                Console.WriteLine("7.) I am Julius Ceasar, you killed my father, prepare to die!");
                 Console.WriteLine("8.) Quit");
+                Console.Write("Please make your selection: ");
 
                 int userChoice = Validator.ValidateUserNumber();
+                Console.Clear();
 
                 switch (userChoice)
                 {
@@ -62,12 +66,14 @@ namespace LibraryOfAlexandria
         static void ListMenu(Library library)
         {
             bool condition = false;
-
-            Console.WriteLine("What would you like to see");
-            Console.WriteLine("1.) Total Inventory");
+            Console.WriteLine(" ----------- ");
+            Console.WriteLine($"| Book Menu |");
+            Console.WriteLine(" ----------- ");
+            Console.WriteLine("1.) All books");
             Console.WriteLine("2.) Available Books");
             Console.WriteLine("3.) Checked Out Books");
             Console.WriteLine("4.) Banned Books"); //rizzo
+            Console.Write("Please make your selection: ");
 
             while (!condition)
             {
@@ -101,8 +107,9 @@ namespace LibraryOfAlexandria
             bool checkoutSuccess = false;
             if (action == "checkout")
             {
-                Console.Clear();
-                Console.WriteLine("Book Checkout Search\n");
+                Console.WriteLine(" ----------------------");
+                Console.WriteLine("| Book Checkout Search |");
+                Console.WriteLine(" ----------------------\n");
                 Console.WriteLine("What would you like to search by?");
                 Console.WriteLine("1.) Title");
                 Console.WriteLine("2.) Author");
@@ -114,14 +121,18 @@ namespace LibraryOfAlexandria
                     if (userChoice == 1)
                     {
                         Console.Clear();
-                        Console.WriteLine("Book Checkout Search\n");
+                        Console.WriteLine(" ----------------------");
+                        Console.WriteLine("| Book Checkout Search |");
+                        Console.WriteLine(" ----------------------\n");
                         Book bookToSearchFor = library.SearchByTitle(library, library.Books);
                         checkoutSuccess = library.CheckOutBook(bookToSearchFor);
                         if (checkoutSuccess)
                         {
                             Console.Clear();
                             Console.WriteLine($"{bookToSearchFor.Title} by {bookToSearchFor.Author} has been checked out and is due back by {bookToSearchFor.DueDate}\n");
-                            Console.WriteLine("Returning to main menu\n");
+                            Console.WriteLine(" ------------------------");
+                            Console.WriteLine("| Returning to main menu |");
+                            Console.WriteLine(" ------------------------\n");
                             MainMenu(library);
                         }
                         else
@@ -198,13 +209,18 @@ namespace LibraryOfAlexandria
 
         public static void DonateMenu(Library library)
         {
-            Console.WriteLine("Add a book");
-            Console.WriteLine("Please enter the title of the book you'd like to donate");
+            Console.WriteLine(" ---------------");
+            Console.WriteLine("| Donation Menu |");
+            Console.WriteLine(" ---------------\n");
+            Console.Write("Please enter the title of the book you'd like to donate: ");
             string title = Console.ReadLine();
-            Console.WriteLine("Please enter the author of the book you'd like to donate");
+            Console.Write("Please enter the author of the book you'd like to donate: ");
             string author = Console.ReadLine();
             library.AddABook(title, author);
-            Console.WriteLine("Thank you for your donation!");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine($"\n\"{title}\", By {author} has been successfully added to our system.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Thank you for your donation!\n\n");
         }
 
         public static void DueDateMenu(Library library)
