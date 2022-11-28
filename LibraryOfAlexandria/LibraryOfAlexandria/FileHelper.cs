@@ -37,13 +37,9 @@ namespace LibraryOfAlexandria
                 while (!demoListReader.EndOfStream) //replaced "true"
                 {
                     string line = demoListReader.ReadLine();
-                    //if (line == null)
-                    //{
-                    //    break;
-                    //}
                     string[] sections = line.Split(',');
-                    Book book = new Book(sections[0], sections[1], ShelfStatus.OnShelf); //if we do the optional thing, defaulting to on shelf will be wrong,,
-                                                                                         //itll keep reseting all shelf status to on shelf everytime program is ran
+                    Book book = new Book(sections[0], sections[1], ShelfStatus.OnShelf); 
+                                                                                         
                     library.Books.Add(book);
                 }
                 demoListReader.Close();
@@ -77,8 +73,8 @@ namespace LibraryOfAlexandria
                         status = ShelfStatus.Banned;
                     }
 
-                    Book book = new Book(sections[0], sections[1], status); //if we do the optional thing, defaulting to on shelf will be wrong,,
-                                                                            //itll keep reseting all shelf status to on shelf everytime program is ran
+                    Book book = new Book(sections[0], sections[1], status); 
+                                                                            
                     library.Books.Add(book);
                 }
                 savedListReader.Close();
