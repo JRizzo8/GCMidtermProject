@@ -54,7 +54,7 @@ namespace LibraryOfAlexandria
             {
                 bookToChange.ShelfStatus = ShelfStatus.OnShelf;
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"\n{bookToChange} has been un-banned and put back on the shelf");
+                Console.WriteLine($"\n{bookToChange.Title} has been un-banned and put back on the shelf");
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("\n ------------------------");
                 Console.WriteLine("| Returning to main menu |");
@@ -65,7 +65,7 @@ namespace LibraryOfAlexandria
             {
                 bookToChange.ShelfStatus = ShelfStatus.Banned;
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\n{bookToChange} has been banned");
+                Console.WriteLine($"\n{bookToChange.Title} has been banned");
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("\n ------------------------");
                 Console.WriteLine("| Returning to main menu |");
