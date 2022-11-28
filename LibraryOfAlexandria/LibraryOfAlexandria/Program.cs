@@ -4,7 +4,7 @@ using System.IO;
 using LibraryOfAlexandria;
 using System.Runtime.CompilerServices;
 
-Library library = HelperClass.InitializeLibrary();
+Library library = FileHelper.InitializeLibrary();
 Console.WriteLine("Welcome to");
 Console.WriteLine(@"   __ _ _                                   __     _   _                          _      _
   / /(_) |__  _ __ __ _ _ __ _   _    ___  / _|   /_\ | | _____  ____ _ _ __   __| |_ __(_) __ _
