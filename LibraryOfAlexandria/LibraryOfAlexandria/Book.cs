@@ -1,4 +1,4 @@
-﻿namespace LibraryOfAlexandria
+namespace LibraryOfAlexandria
 {
     public class Book
     {
