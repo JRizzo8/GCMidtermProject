@@ -83,6 +83,8 @@ namespace LibraryOfAlexandria
                         Environment.Exit(0);
                         break;
                     case 8:
+                        FileHelper.SaveFile(library.Books);
+                        Console.WriteLine("Saving Book Database...\n");
                         Console.WriteLine("Thank you for stopping by");
                         Console.WriteLine(@"   __ _ _                                   __     _   _                          _      _
   / /(_) |__  _ __ __ _ _ __ _   _    ___  / _|   /_\ | | _____  ____ _ _ __   __| |_ __(_) __ _
