@@ -16,5 +16,12 @@ namespace LibraryOfAlexandria
             Author = author;
             ShelfStatus = status;
         }
+        public Book(string title, string author, ShelfStatus status, DateTime dueDate)
+        {
+            Title = title;
+            Author = author;
+            ShelfStatus = status;
+            DueDate = dueDate;
+        }
     }
 }

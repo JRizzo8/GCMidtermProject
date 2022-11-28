@@ -21,7 +21,16 @@ namespace LibraryOfAlexandria
             using (TextWriter tw = new StreamWriter(savedInventoryFilePath))
             {
                 foreach (Book book in bookList)
-                    tw.WriteLine($"{book.Title},{book.Author},{book.ShelfStatus.ToString()}");
+                {
+                    if (book.DueDate != null)
+                    {
+                        tw.WriteLine($"{book.Title},{book.Author},{book.ShelfStatus.ToString()},{book.DueDate}");
+                    }
+                    else
+                    {
+                        tw.WriteLine($"{book.Title},{book.Author},{book.ShelfStatus.ToString()}");
+                    }
+                }
             }
         }
 
@@ -56,6 +65,7 @@ namespace LibraryOfAlexandria
                     string line = savedListReader.ReadLine();
 
                     string[] sections = line.Split(',');
+                    DateTime date = DateTime.Parse(sections[3]);
                     if (sections[2].ToString() == "OnShelf")
                     {
                         status = ShelfStatus.OnShelf;
@@ -73,7 +83,7 @@ namespace LibraryOfAlexandria
                         status = ShelfStatus.Banned;
                     }
 
-                    Book book = new Book(sections[0], sections[1], status); 
+                    Book book = new Book(sections[0], sections[1], status, date); 
                                                                             
                     library.Books.Add(book);
                 }
