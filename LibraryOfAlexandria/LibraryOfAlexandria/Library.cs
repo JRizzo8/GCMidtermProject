@@ -126,7 +126,7 @@ namespace LibraryOfAlexandria
             }
 
             Console.WriteLine("What is the title of the book you would like to check the due date of?");
-            string choice = "";
+            choice = "";
             choice = Console.ReadLine();
 
             if (checkedOutBooks.Count() > 0)
