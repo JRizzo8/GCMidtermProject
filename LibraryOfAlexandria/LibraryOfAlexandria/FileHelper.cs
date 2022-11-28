@@ -15,9 +15,6 @@ namespace LibraryOfAlexandria
         public static string demoInventoryPath = projectDirectory + @"\DemoInventory.txt";
         public static string savedInventoryFilePath = projectDirectory + @"\SavedInventory.txt";
 
-
-
-
         public static void SaveFile(List<Book> bookList)
         {
 
@@ -33,7 +30,9 @@ namespace LibraryOfAlexandria
             Library library = new Library();
             if (!(File.Exists(savedInventoryFilePath)))
             {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("No database found. Generating demo list of books\n");
+                Console.ResetColor();
                 StreamReader demoListReader = new StreamReader(demoInventoryPath);
                 while (!demoListReader.EndOfStream) //replaced "true"
                 {
@@ -51,7 +50,9 @@ namespace LibraryOfAlexandria
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("Existing book database found\n");
+                Console.ResetColor();
                 StreamReader savedListReader = new StreamReader(savedInventoryFilePath);
                 while (!savedListReader.EndOfStream) //replaced "true"
                 {
@@ -84,22 +85,5 @@ namespace LibraryOfAlexandria
             }
             return library;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
