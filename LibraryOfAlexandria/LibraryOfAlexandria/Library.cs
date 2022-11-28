@@ -301,6 +301,7 @@ namespace LibraryOfAlexandria
         public void DisplayAvailableBooks()
         {
             List<Book> availableBooks = Books.Where(x => x.ShelfStatus.ToString() == ShelfStatus.OnShelf.ToString()).ToList();
+            Console.WriteLine();
             MenuClass.ListBooksWithoutStatus(availableBooks);
         }
     }
