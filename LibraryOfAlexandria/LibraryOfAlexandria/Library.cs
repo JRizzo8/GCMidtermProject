@@ -14,9 +14,8 @@ namespace LibraryOfAlexandria
         
         }
 
-
-        //RIZZO METHODS
-        public bool CheckOutBook(Book bookToReturn)
+        // RIZZO Methods
+        public bool CheckOutBook(Book bookToReturn) 
         {
             List<Book> checkedOutBookList = Books.Where(x => x.ShelfStatus == ShelfStatus.OffShelf).ToList();
             if (checkedOutBookList.Contains(bookToReturn))
@@ -36,12 +35,58 @@ namespace LibraryOfAlexandria
         {
             Books.Add(new Book(title, author, ShelfStatus.OnShelf));
         }
+
         public void ReturnBooks(Book bookToReturn)
         {
             bookToReturn.ShelfStatus = ShelfStatus.OnShelf;
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"\nYour book has been successfully returned");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("\n ------------------------");
+            Console.WriteLine("| Returning to main menu |");
+            Console.WriteLine(" ------------------------\n");
+            Console.ForegroundColor = ConsoleColor.White;
+
         }
-            //rizzo
-        
+
+        public void ChangeBanStatus(Book bookToChange)
+        {
+            if (bookToChange.ShelfStatus == ShelfStatus.Banned)
+            {
+                bookToChange.ShelfStatus = ShelfStatus.OnShelf;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"\n{bookToChange} has been un-banned and put back on the shelf");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("\n ------------------------");
+                Console.WriteLine("| Returning to main menu |");
+                Console.WriteLine(" ------------------------\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                bookToChange.ShelfStatus = ShelfStatus.Banned;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"\n{bookToChange} has been banned");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("\n ------------------------");
+                Console.WriteLine("| Returning to main menu |");
+                Console.WriteLine(" ------------------------\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
+
+        public void DisplayBannedList()
+        {
+            IEnumerable<Book> bannedBooks = from book in Books
+                                            where book.ShelfStatus == ShelfStatus.Banned
+                                            select book;
+
+
+            Console.WriteLine("The following books are banned \n");
+
+            MenuClass.ListBooksWithoutStatus(bannedBooks.ToList());
+
+        }
 
         public void DisplayCheckedOutList()
         {
@@ -49,63 +94,81 @@ namespace LibraryOfAlexandria
                                                 where book.ShelfStatus == ShelfStatus.OffShelf
                                                 select book;
 
-            foreach (var book in checkedOutBooks)
+            MenuClass.ListBooksWithoutStatus(checkedOutBooks.ToList());
+
+        }
+
+        public void CheckDueDate(Library library)
+        {
+            Console.WriteLine(" -----------------");
+            Console.WriteLine("| Due Date Search |");
+            Console.WriteLine(" -----------------\n");
+            Console.WriteLine("What is the title of the book you would like to check the due date of?");
+            string choice = "";
+            choice = Console.ReadLine();
+            IEnumerable<Book> checkedOutBooks = from book in Books
+                                                where book.ShelfStatus == ShelfStatus.OffShelf
+                                                select book;
+
+            if (checkedOutBooks.Count() > 0)
             {
-                Console.WriteLine($"{book.Title} by {book.Author}");
+                for (int i = 0; i < Books.Count(); i++)
+                {
+                    if ((Books[i].Title.ToLower().Contains(choice)) && Books[i].ShelfStatus == ShelfStatus.OffShelf)
+                    {
+                        Console.Clear();
+                        Console.WriteLine(" -----------------");
+                        Console.WriteLine("| Due Date Search |");
+                        Console.WriteLine(" -----------------\n");
+                        Console.WriteLine($"The due date of {Books[i].Title} is {Books[i].DueDate} \n\n");
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.WriteLine(" ------------------------");
+                        Console.WriteLine("| Returning to main menu |");
+                        Console.WriteLine(" ------------------------\n");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else if ((Books[i].Title.Contains(choice)) && Books[i].ShelfStatus == ShelfStatus.OffShelf)
+                    {
+                        Console.Clear();
+                        Console.WriteLine(" -----------------");
+                        Console.WriteLine("| Due Date Search |");
+                        Console.WriteLine(" -----------------\n");
+                        Console.WriteLine($"The due date of {Books[i].Title} is {Books[i].DueDate} \n\n");
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.WriteLine(" ------------------------");
+                        Console.WriteLine("| Returning to main menu |");
+                        Console.WriteLine(" ------------------------\n");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                }
+                MenuClass.MainMenu(library);
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine(" -----------------");
+                Console.WriteLine("| Due Date Search |");
+                Console.WriteLine(" -----------------\n");
+                Console.WriteLine("That book is not checked out at this time or is unavailable at this library.\n\n");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine(" ------------------------");
+                Console.WriteLine("| Returning to main menu |");
+                Console.WriteLine(" ------------------------\n");
+                Console.ForegroundColor = ConsoleColor.White;
+                MenuClass.MainMenu(library);
             }
 
-        }
-
-        public void DisplayRemovedBooks()
-        {
 
         }
 
-        //public List<Book> DisplayAvailableBooks(string available)
-        //{
-
-        //    IEnumerable<Book> availableBooks = from book in Books
-        //                                        where book.ShelfStatus == ShelfStatus.OnShelf
-        //                                        select book;
-
-        //    foreach (var book in availableBooks)
-        //    {
-        //        Console.WriteLine($"{book.Title} by {book.Author}");
-        //    }
-
-
-        //    List<Book> availibleList = new List<Book>();
-
-        //    foreach (var item in Books)
-        //    {
-        //        if (item.Title == title && item.ShelfStatus == ShelfStatus.OffShelf)
-        //        {
-        //            item.ShelfStatus = ShelfStatus.OnShelf;
-        //        }
-
-        //    }
-
-
-        //    return availibleList;
-
-        //}
-
-        public void CheckDueDate()
-        {
-            IEnumerable<Book> bookDueDate = from book in Books                                    
-                                             orderby book ascending
-                                             select book;
-
-            foreach (var book in bookDueDate)
-            {
-                Console.WriteLine($"{book.Title} by {book.Author} is due {book.DueDate}");
-            }
-        }
-
+        // COLIN Methods
         public Book SearchByTitle(Library library, List<Book> bookList)
         {
+            Console.Clear();
             List<Book> titleSearchResultsList = new List<Book>();
-
+            Console.WriteLine(" ---------------------------");
+            Console.WriteLine("| Check Out / Returns / Ban |");
+            Console.WriteLine(" ---------------------------\n");
             Console.Write("Please enter a title to search by: ");
             string titleSearchString = Console.ReadLine().ToLower();
 
@@ -117,6 +180,9 @@ namespace LibraryOfAlexandria
             if (titleSearchResultsList.Count > 0)
             {
                 Console.Clear();
+                Console.WriteLine(" ---------------------------");
+                Console.WriteLine("| Check Out / Returns / Ban |");
+                Console.WriteLine(" ---------------------------\n");
                 Console.WriteLine($"Found {titleSearchResultsList.Count} book(s)");
 
                 for (int i = 0; i < titleSearchResultsList.Count; i++)
@@ -126,14 +192,22 @@ namespace LibraryOfAlexandria
 
                 Console.Write("\nPlease enter the number of the book you'd like to choose: ");
 
-                int userInt = int.Parse(Console.ReadLine());
-                Book userBook = titleSearchResultsList[userInt - 1];
+                int userInt = Validator.ValidateUserNumber();
+                Book userBook = titleSearchResultsList[userInt - 1]; // Throws IndexOutofRangeException when any number outside of number of titles in search is given
                 return userBook;
             }
             else if (!titleSearchResultsList.Any())
             {
                 Console.Clear();
-                Console.WriteLine($"A book with the title '{titleSearchString}' was not found, returning to main menu\n");
+                Console.WriteLine(" ---------------------------");
+                Console.WriteLine("| Check Out / Returns / Ban |");
+                Console.WriteLine(" ---------------------------\n");
+                Console.WriteLine($"A book with the title '{titleSearchString}' was not found.");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("\n ------------------------");
+                Console.WriteLine("| Returning to main menu |");
+                Console.WriteLine(" ------------------------\n");
+                Console.ForegroundColor = ConsoleColor.White;
                 MenuClass.MainMenu(library);
                 //return to main menu
             }
@@ -147,6 +221,7 @@ namespace LibraryOfAlexandria
         {
             List<Book> authorSearchResultsList = new List<Book>();
 
+            Console.Clear();
             Console.Write("Please enter an author to search by: ");
             string authorSearchString = Console.ReadLine().ToLower();
 
@@ -158,6 +233,9 @@ namespace LibraryOfAlexandria
             if (authorSearchResultsList.Count > 0)
             {
                 Console.Clear();
+                Console.WriteLine(" ---------------------------");
+                Console.WriteLine("| Check Out / Returns / Ban |");
+                Console.WriteLine(" ---------------------------\n");
                 Console.WriteLine($"Found {authorSearchResultsList.Count} book(s)");
 
                 for (int i = 0; i < authorSearchResultsList.Count; i++)
@@ -174,7 +252,15 @@ namespace LibraryOfAlexandria
             else if (!authorSearchResultsList.Any())
             {
                 Console.Clear();
-                Console.WriteLine($"Author '{authorSearchString}' not found, returning to main menu\n");
+                Console.WriteLine(" ---------------------------");
+                Console.WriteLine("| Check Out / Returns / Ban |");
+                Console.WriteLine(" ---------------------------\n");
+                Console.WriteLine($"Author '{authorSearchString}' not found.");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("\n ------------------------");
+                Console.WriteLine("| Returning to main menu |");
+                Console.WriteLine(" ------------------------\n");
+                Console.ForegroundColor = ConsoleColor.White;
                 MenuClass.MainMenu(library);
             }
 
@@ -182,63 +268,18 @@ namespace LibraryOfAlexandria
             throw new Exception("SearchByAuthor Method Exception");
         }
 
-
-        //public void DisplayCheckedOutList()
-        //{
-
-        //}
-
-        //public void DisplayRemovedBooks()
-        //{
-
-        //}
-
-        public void ListPastDueBooks()
-        {
-
-        }
-        //*/
-
-        //AMELIA METHODS
+        // Amelia
         public void DisplayAllBooks()
         {
-            Console.WriteLine($"All books: \n");
-            foreach (var item in Books)
-            {
-                Console.WriteLine($"\"{item.Title}\" by {item.Author}");
-                if (item.ShelfStatus == 0)
-                {
-                    Console.ForegroundColor= ConsoleColor.Green;
-                    Console.WriteLine($"{item.ShelfStatus}");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else //I dont fully know how many different shelf statuses we have so for now im just keeping it to On or Off
-                {
-                    Console.ForegroundColor= ConsoleColor.Red;
-                    Console.WriteLine($"{item.ShelfStatus}");
-                    Console.ForegroundColor= ConsoleColor.White;
-                }
-            }
+            Console.WriteLine();
+            MenuClass.ListBooksWithStatus(Books);
+            Console.WriteLine($"\n\n");
         }
 
         public void DisplayAvailableBooks()
         {
-            Console.WriteLine($"Books available to check out: \n");
-            foreach (var item in Books)
-            {
-                if (item.ShelfStatus == 0)
-                {
-                    Console.WriteLine($"\"{item.Title}\" by {item.Author}");
-                }
-            }
+            List<Book> availableBooks = Books.Where(x => x.ShelfStatus.ToString() == ShelfStatus.OnShelf.ToString()).ToList();
+            MenuClass.ListBooksWithoutStatus(availableBooks);
         }
     }
 }
-
-/* QUESTION SECTION
-
-L18: //can you just type book.ShelfStatus == 0 since the enum class has OnShelf's value is 0?
-CHECK HELPER CLASS FOR POSSIBLE ERROR
-Also Rachel Ray txt file author/title info is reversed
-
-*/

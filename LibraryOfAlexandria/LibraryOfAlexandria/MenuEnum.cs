@@ -11,6 +11,6 @@ namespace LibraryOfAlexandria
         Browse = 1,
         CheckOut,
         Return,
-        Donate,
+        Donate
     }
 }
