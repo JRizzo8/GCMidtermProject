@@ -46,7 +46,6 @@ namespace LibraryOfAlexandria
             Console.WriteLine("| Returning to main menu |");
             Console.WriteLine(" ------------------------\n");
             Console.ForegroundColor = ConsoleColor.White;
-
         }
 
         public void ChangeBanStatus(Book bookToChange)
@@ -96,6 +95,11 @@ namespace LibraryOfAlexandria
 
             MenuClass.ListBooksWithoutStatus(checkedOutBooks.ToList());
 
+            if(checkedOutBooks.Count() == 0)
+            {
+                Console.WriteLine($"There are no books checked out at this time. Returning to main menu now.");
+            }
+
         }
 
         public void CheckDueDate(Library library)
@@ -109,6 +113,21 @@ namespace LibraryOfAlexandria
             IEnumerable<Book> checkedOutBooks = from book in Books
                                                 where book.ShelfStatus == ShelfStatus.OffShelf
                                                 select book;
+
+            if (checkedOutBooks.Count() == 0)
+            {
+                Console.WriteLine("There are no books checked out at this time.");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("\n ------------------------");
+                Console.WriteLine("| Returning to main menu |");
+                Console.WriteLine(" ------------------------\n");
+                Console.ForegroundColor = ConsoleColor.White;
+                MenuClass.MainMenu(library);
+            }
+
+            Console.WriteLine("What is the title of the book you would like to check the due date of?");
+            string choice = "";
+            choice = Console.ReadLine();
 
             if (checkedOutBooks.Count() > 0)
             {
@@ -192,9 +211,12 @@ namespace LibraryOfAlexandria
 
                 Console.Write("\nPlease enter the number of the book you'd like to choose: ");
 
-                int userInt = Validator.ValidateUserNumber();
-                Book userBook = titleSearchResultsList[userInt - 1]; // Throws IndexOutofRangeException when any number outside of number of titles in search is given
+                int userInt = Validator.GetNumberInRange(1, titleSearchResultsList.Count);
+                Book userBook = titleSearchResultsList[userInt - 1];
                 return userBook;
+
+
+
             }
             else if (!titleSearchResultsList.Any())
             {
@@ -245,7 +267,7 @@ namespace LibraryOfAlexandria
 
                 Console.Write("\nPlease enter the number of the book you'd like to like to choose: ");
 
-                int userInt = int.Parse(Console.ReadLine());
+                int userInt = Validator.GetNumberInRange(1, authorSearchResultsList.Count);
                 Book userBook = authorSearchResultsList[userInt - 1];
                 return userBook;
             }
