@@ -15,9 +15,6 @@ namespace LibraryOfAlexandria
         public static string demoInventoryPath = projectDirectory + @"\DemoInventory.txt";
         public static string savedInventoryFilePath = projectDirectory + @"\SavedInventory.txt";
 
-
-
-
         public static void SaveFile(List<Book> bookList)
         {
 
@@ -33,25 +30,25 @@ namespace LibraryOfAlexandria
             Library library = new Library();
             if (!(File.Exists(savedInventoryFilePath)))
             {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("No database found. Generating demo list of books\n");
+                Console.ResetColor();
                 StreamReader demoListReader = new StreamReader(demoInventoryPath);
                 while (!demoListReader.EndOfStream) //replaced "true"
                 {
                     string line = demoListReader.ReadLine();
-                    //if (line == null)
-                    //{
-                    //    break;
-                    //}
                     string[] sections = line.Split(',');
-                    Book book = new Book(sections[0], sections[1], ShelfStatus.OnShelf); //if we do the optional thing, defaulting to on shelf will be wrong,,
-                                                                                         //itll keep reseting all shelf status to on shelf everytime program is ran
+                    Book book = new Book(sections[0], sections[1], ShelfStatus.OnShelf); 
+                                                                                         
                     library.Books.Add(book);
                 }
                 demoListReader.Close();
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("Existing book database found\n");
+                Console.ResetColor();
                 StreamReader savedListReader = new StreamReader(savedInventoryFilePath);
                 while (!savedListReader.EndOfStream) //replaced "true"
                 {
@@ -76,30 +73,13 @@ namespace LibraryOfAlexandria
                         status = ShelfStatus.Banned;
                     }
 
-                    Book book = new Book(sections[0], sections[1], status); //if we do the optional thing, defaulting to on shelf will be wrong,,
-                                                                            //itll keep reseting all shelf status to on shelf everytime program is ran
+                    Book book = new Book(sections[0], sections[1], status); 
+                                                                            
                     library.Books.Add(book);
                 }
                 savedListReader.Close();
             }
             return library;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

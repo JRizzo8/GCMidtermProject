@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic;
+
 namespace LibraryOfAlexandria
 {
     public class Book
